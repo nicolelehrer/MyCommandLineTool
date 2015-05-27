@@ -12,10 +12,21 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
         
-        NSLog(@"What is your name?");
+        NSLog(@"Which site do you want to pull data from?");
+        
         char str[50] = {0};
         scanf("%s", str);
-        NSLog(@"Hello, %s!", str);
+        
+        NSString * address = [NSString stringWithFormat:@"%s", str];
+        NSURL * url = [NSURL URLWithString:address];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        
+        NSData *returnData = [NSURLConnection sendSynchronousRequest: request returningResponse: nil error: nil];
+
+        NSLog(@" data from site is %@", [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+        
     }
     return 0;
 }
+
